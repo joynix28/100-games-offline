@@ -202,10 +202,10 @@ private fun Mancala(variant: Int, finish: (Long, Boolean) -> Unit) {
 }
 
 @Composable
-private fun Hole(count: Int, mine: Boolean, enabled: Boolean, onClick: () -> Unit) {
+private fun Hole(count: Int, mine: Boolean, enabled: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Box(
-        Modifier
-            .fillMaxSize()
+        modifier
+            .fillMaxHeight()
             .padding(2.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(if (mine) Ink.Coral.copy(alpha = if (enabled) 0.18f else 0.08f) else Ink.CardAlt)
