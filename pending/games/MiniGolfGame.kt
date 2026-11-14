@@ -55,7 +55,6 @@ private fun MiniGolfScreen(variant: Int, finish: (Long, Boolean) -> Unit) {
     var total by remember { mutableIntStateOf(0) }
     var phase by remember { mutableIntStateOf(0) }
     var wait by remember { mutableFloatStateOf(0f) }
-    var aimStart by remember { mutableStateOf(Offset.Zero) }
     var aimNow by remember { mutableStateOf(Offset.Zero) }
     var message by remember { mutableStateOf("Glissez pour putter.") }
     var reported by remember { mutableStateOf(false) }
@@ -136,7 +135,7 @@ private fun MiniGolfScreen(variant: Int, finish: (Long, Boolean) -> Unit) {
                 .weight(1f)
                 .pointerInput(Unit) {
                     detectDragGestures(
-                        onDragStart = { if (phase == 0) { aimStart = it; aimNow = it } },
+                        onDragStart = { if (phase == 0) aimNow = it },
                         onDragEnd = {
                             if (phase == 0) {
                                 val w = size.width.toFloat()
