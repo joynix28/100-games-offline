@@ -106,7 +106,7 @@ private fun BowlingScreen(variant: Int, finish: (Long, Boolean) -> Unit) {
                                         val q = BOWL_PINS[j]
                                         val dx = p.first - q.first
                                         val dy = (p.second - q.second) * 1.7f
-                                        sqrt(dx * dx + dy * dy) < 0.095f
+                                        sqrt(dx * dx + dy * dy) < 0.070f
                                     }
                                 ) {
                                     knocked = knocked + i

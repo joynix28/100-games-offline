@@ -75,6 +75,10 @@ private fun puzzleOrder(n: Int, steps: Int): List<Int> {
         previous = empty
         empty = pick
     }
+    if (order.indices.all { order[it] == it }) {
+        order[n * n - 1] = order[n * n - 2]
+        order[n * n - 2] = n * n - 1
+    }
     return order
 }
 

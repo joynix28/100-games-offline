@@ -74,6 +74,7 @@ private fun PetitsChevaux(variant: Int, finish: (Long, Boolean) -> Unit) {
     }
 
     fun movePawn(player: Int, pawn: Int, d: Int) {
+        if (reported) return
         val index = player * 4 + pawn
         val prog = pawns[index]
         val next = if (prog == 0) 1 else prog + d
