@@ -1,0 +1,25 @@
+100 Games Offline
+Copyright 2026 Joynix — https://github.com/joynix28
+
+Concept de la collection, sélection des jeux, direction artistique et
+implémentation : Joynix.
+
+Si vous réutilisez ce code, son design ou l'idée, vous devez conserver cette
+notice et créditer l'auteur avec un lien vers le dépôt d'origine :
+https://github.com/joynix28/100-games-offline
+
+--------------------------------------------------------------------------------
+
+Composants tiers :
+
+- Space Grotesk, Copyright 2020 The Space Grotesk Project Authors
+  (https://github.com/floriankarsten/space-grotesk)
+  Sous SIL Open Font License 1.1 — voir shared/src/commonMain/composeResources/font/OFL.txt
+
+- Kotlin, Jetpack Compose, Compose Multiplatform — Apache License 2.0
+
+- Effets sonores : synthétisés pour ce projet (scripts/gen_sounds.py).
+
+Les règles des jeux classiques (morpion, 2048, démineur, serpent, etc.) sont
+dans le domaine public. Aucune ressource graphique ou sonore d'une application
+existante n'est utilisée.
