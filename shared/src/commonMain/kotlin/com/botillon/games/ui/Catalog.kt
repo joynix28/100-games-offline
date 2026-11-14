@@ -62,6 +62,7 @@ object Catalog {
         DominoesGame.entry,
     )
 
+
     fun byId(id: String): GameEntry? = entries.firstOrNull { it.id == id }
 
     val variantCount: Int get() = entries.sumOf { it.variants.size }
