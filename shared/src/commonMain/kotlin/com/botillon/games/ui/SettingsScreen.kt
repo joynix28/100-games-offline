@@ -3,6 +3,7 @@ package com.botillon.games.ui
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -35,8 +37,11 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onToggleSound: (Boolean) -> Unit,
     onToggleHaptics: (Boolean) -> Unit,
+    onLang: (Lang) -> Unit,
+    onZoom: (Float) -> Unit,
     onReset: () -> Unit,
 ) {
+    val s = LocalStrings.current
     var confirm by remember { mutableStateOf(false) }
 
     Backdrop {
@@ -51,8 +56,8 @@ fun SettingsScreen(
                 }
                 Spacer(Modifier.width(10.dp))
                 Column {
-                    AppText("RÉGLAGES", style = Typo.label, color = Ink.Coral)
-                    AppText("À ta façon", style = Typo.title, color = Ink.Text)
+                    AppText(s.settings, style = Typo.label, color = Ink.Coral)
+                    AppText(s.settingsSub, style = Typo.title, color = Ink.Text)
                 }
             }
 
@@ -60,57 +65,65 @@ fun SettingsScreen(
 
             Panel(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(vertical = 4.dp)) {
-                    SettingRow(
-                        title = "Sons",
-                        subtitle = "Taps, victoires, défaites",
-                        checked = progress.sound,
-                        onChange = onToggleSound,
-                    )
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .height(1.dp)
-                            .background(Ink.Line),
-                    )
-                    SettingRow(
-                        title = "Vibrations",
-                        subtitle = "Retour haptique",
-                        checked = progress.haptics,
-                        onChange = onToggleHaptics,
-                    )
+                    SettingRow(s.sound, s.soundSub, progress.sound, onToggleSound)
+                    Box(Modifier.fillMaxWidth().padding(horizontal = 16.dp).height(1.dp).background(Ink.Line))
+                    SettingRow(s.haptics, s.hapticsSub, progress.haptics, onToggleHaptics)
                 }
             }
 
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(12.dp))
+
+            Panel(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(16.dp)) {
+                    AppText(s.language, style = Typo.body.copy(fontSize = 15.sp), color = Ink.Text)
+                    Spacer(Modifier.height(8.dp))
+                    Row {
+                        ChoiceChip("Français", progress.lang == Lang.FR) { onLang(Lang.FR) }
+                        Spacer(Modifier.width(8.dp))
+                        ChoiceChip("English", progress.lang == Lang.EN) { onLang(Lang.EN) }
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    AppText(s.zoom, style = Typo.body.copy(fontSize = 15.sp), color = Ink.Text)
+                    Spacer(Modifier.height(8.dp))
+                    Row {
+                        ChoiceChip(s.zoomSmall, progress.zoom < 0.95f) { onZoom(0.88f) }
+                        Spacer(Modifier.width(8.dp))
+                        ChoiceChip(s.zoomNormal, progress.zoom in 0.95f..1.05f) { onZoom(1f) }
+                        Spacer(Modifier.width(8.dp))
+                        ChoiceChip(s.zoomLarge, progress.zoom > 1.05f) { onZoom(1.14f) }
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(12.dp))
 
             Panel(Modifier.fillMaxWidth(), color = Ink.CardAlt) {
-                Column(Modifier.padding(18.dp)) {
-                    AppText("COLLECTION", style = Typo.label, color = Ink.Muted)
-                    Spacer(Modifier.height(10.dp))
-                    StatLine("Jeux disponibles", "${Catalog.entries.size}")
-                    StatLine("Variantes", "${Catalog.variantCount}")
-                    StatLine("Jeux essayés", "${progress.played.size}")
+                Column(Modifier.padding(16.dp)) {
+                    AppText(s.collection, style = Typo.label, color = Ink.Muted)
+                    Spacer(Modifier.height(8.dp))
+                    StatLine(s.gamesAvailable, "${Catalog.entries.size}")
+                    StatLine(s.variantsCount, "${Catalog.variantCount}")
+                    StatLine(s.tried, "${progress.played.size}")
                 }
             }
 
             Spacer(Modifier.weight(1f))
 
-            SecondaryButton("RÉINITIALISER LES RECORDS", { confirm = true }, Modifier.fillMaxWidth())
+            SecondaryButton(s.resetRecords, { confirm = true }, Modifier.fillMaxWidth())
             Spacer(Modifier.height(12.dp))
             AppText(
-                "100 Games Offline · 1.0",
+                "100 Games Offline · 1.1",
                 style = Typo.label.copy(fontSize = 9.sp),
                 color = Ink.Muted,
                 modifier = Modifier.fillMaxWidth(),
-                align = androidx.compose.ui.text.style.TextAlign.Center,
+                align = TextAlign.Center,
             )
             AppText(
-                "Sans publicité. Sans compte. Sans connexion.",
+                s.about,
                 style = Typo.small,
                 color = Ink.Muted,
                 modifier = Modifier.fillMaxWidth(),
-                align = androidx.compose.ui.text.style.TextAlign.Center,
+                align = TextAlign.Center,
             )
         }
 
@@ -124,19 +137,11 @@ fun SettingsScreen(
             ) {
                 Panel(Modifier.fillMaxWidth().padding(horizontal = 28.dp)) {
                     Column(Modifier.padding(22.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                        AppText("Effacer les records ?", style = Typo.title, color = Ink.Text)
+                        AppText(s.resetTitle, style = Typo.title, color = Ink.Text)
                         Spacer(Modifier.height(10.dp))
-                        PrimaryButton(
-                            "EFFACER",
-                            {
-                                onReset()
-                                confirm = false
-                            },
-                            Modifier.fillMaxWidth(),
-                            color = Ink.Coral,
-                        )
+                        PrimaryButton(s.erase, { onReset(); confirm = false }, Modifier.fillMaxWidth(), color = Ink.Coral)
                         Spacer(Modifier.height(8.dp))
-                        SecondaryButton("ANNULER", { confirm = false }, Modifier.fillMaxWidth())
+                        SecondaryButton(s.cancel, { confirm = false }, Modifier.fillMaxWidth())
                     }
                 }
             }
@@ -145,17 +150,23 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun SettingRow(
-    title: String,
-    subtitle: String,
-    checked: Boolean,
-    onChange: (Boolean) -> Unit,
-) {
-    Row(
+private fun ChoiceChip(label: String, selected: Boolean, onClick: () -> Unit) {
+    Box(
         Modifier
-            .fillMaxWidth()
-            .clickable { onChange(!checked) }
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .clip(RoundedCornerShape(50))
+            .background(if (selected) Ink.Teal else Ink.Card)
+            .then(if (selected) Modifier else Modifier.border(1.dp, Ink.Line, RoundedCornerShape(50)))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 7.dp),
+    ) {
+        AppText(label, style = Typo.small, color = if (selected) Color.White else Ink.Soft)
+    }
+}
+
+@Composable
+private fun SettingRow(title: String, subtitle: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().clickable { onChange(!checked) }.padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f)) {
@@ -177,13 +188,7 @@ private fun Switch(checked: Boolean, onChange: (Boolean) -> Unit) {
             .clickable { onChange(!checked) },
         contentAlignment = Alignment.CenterStart,
     ) {
-        Box(
-            Modifier
-                .offset(x = (3 + knob * 20).dp)
-                .size(24.dp)
-                .clip(CircleShape)
-                .background(Color.White),
-        )
+        Box(Modifier.offset(x = (3 + knob * 20).dp).size(24.dp).clip(CircleShape).background(Color.White))
     }
 }
 

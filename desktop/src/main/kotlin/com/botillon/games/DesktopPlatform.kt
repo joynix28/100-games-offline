@@ -34,6 +34,10 @@ class DesktopProgressStore : ProgressStore {
                 played = props.getProperty("played").orEmpty().split(',').filter { it.isNotBlank() }.toSet(),
                 sound = props.getProperty("sound")?.toBooleanStrictOrNull() ?: true,
                 haptics = props.getProperty("haptics")?.toBooleanStrictOrNull() ?: true,
+                lang = runCatching {
+                    com.botillon.games.ui.Lang.valueOf(props.getProperty("lang", "FR"))
+                }.getOrDefault(com.botillon.games.ui.Lang.FR),
+                zoom = props.getProperty("zoom")?.toFloatOrNull() ?: 1f,
             )
         }.getOrDefault(Progress())
     }
@@ -46,6 +50,8 @@ class DesktopProgressStore : ProgressStore {
             props.setProperty("played", progress.played.joinToString(","))
             props.setProperty("sound", progress.sound.toString())
             props.setProperty("haptics", progress.haptics.toString())
+            props.setProperty("lang", progress.lang.name)
+            props.setProperty("zoom", progress.zoom.toString())
             file.outputStream().use { props.store(it, "100 Games Offline") }
         }
     }

@@ -1,6 +1,7 @@
 package com.botillon.games.ui
 
 import com.botillon.games.games.BreakoutGame
+import com.botillon.games.games.CheckersGame
 import com.botillon.games.games.Connect4Game
 import com.botillon.games.games.Game2048Entry
 import com.botillon.games.games.MemoryGame
@@ -38,6 +39,7 @@ object Catalog {
         Connect4Game.entry,
         MathGame.entry,
         HangmanGame.entry,
+        CheckersGame.entry,
     )
 
     fun byId(id: String): GameEntry? = entries.firstOrNull { it.id == id }

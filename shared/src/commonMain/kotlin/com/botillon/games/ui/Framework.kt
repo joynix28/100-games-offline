@@ -175,6 +175,7 @@ fun FinishPanel(
     onReplay: () -> Unit,
     onExit: () -> Unit,
 ) {
+    val strings = LocalStrings.current
     var shown by remember { mutableStateOf(false) }
     val alpha by animateFloatAsState(if (shown) 1f else 0f, tween(180), label = "fade")
     LaunchedEffect(Unit) { shown = true }
@@ -191,7 +192,7 @@ fun FinishPanel(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 AppText(
-                    text = if (won) "GAGNÉ" else "TERMINÉ",
+                    text = if (won) strings.won else strings.over,
                     style = Typo.label.copy(letterSpacing = 2.sp),
                     color = if (won) Ink.Teal else Ink.Muted,
                 )
@@ -201,14 +202,14 @@ fun FinishPanel(
                 AppText("$score", style = Typo.big, color = Ink.Text)
                 Spacer(Modifier.height(2.dp))
                 AppText(
-                    text = if (score >= best && best > 0) "nouveau record" else "record : $best",
+                    text = if (score >= best && best > 0) strings.newRecord else "${strings.record} : $best",
                     style = Typo.small,
                     color = if (score >= best && best > 0) Ink.Coral else Ink.Muted,
                 )
                 Spacer(Modifier.height(22.dp))
-                PrimaryButton("REJOUER", onReplay, Modifier.fillMaxWidth(), color = entry.accent)
+                PrimaryButton(strings.playAgain, onReplay, Modifier.fillMaxWidth(), color = entry.accent)
                 Spacer(Modifier.height(9.dp))
-                SecondaryButton("MENU", onExit, Modifier.fillMaxWidth())
+                SecondaryButton(strings.menu, onExit, Modifier.fillMaxWidth())
             }
         }
     }

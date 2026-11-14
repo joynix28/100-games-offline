@@ -28,6 +28,8 @@ data class Progress(
     val played: Set<String> = emptySet(),
     val sound: Boolean = true,
     val haptics: Boolean = true,
+    val lang: Lang = Lang.FR,
+    val zoom: Float = 1f,
 ) {
     fun bestOf(id: String): Long = best[id] ?: 0L
 }

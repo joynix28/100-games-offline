@@ -40,8 +40,9 @@ vitesse). Le hub affiche automatiquement le nombre de jeux et de variantes.
 | Chiffre mystère | 1 à 50, 1 à 100, 1 à 500 |
 | Allumettes | 11, 15, 21 |
 | Pierre-feuille-ciseaux | 2, 3, 5 manches |
+| Dames | Rapide, Classique, Longue |
 
-Soit **15 jeux et 45 variantes** dans cette version.
+Soit **16 jeux et 48 variantes** dans cette version.
 
 La collection est prévue pour grandir jusqu'à 100 jeux. L'architecture est
 faite pour ça : un fichier par jeu, une entrée dans `Catalog.kt`.
@@ -54,6 +55,11 @@ faite pour ça : un fichier par jeu, une entrée dans `Catalog.kt`.
 
 Le cadre commun (`GameHost`) gère le titre, les variantes, le record et le
 panneau de fin. Un jeu n'a donc que sa logique et son plateau à écrire.
+
+## Langue et zoom
+
+Les réglages permettent de choisir **français ou anglais** et la **taille de
+l'interface** (petit, normal, grand). Le choix est sauvegardé localement.
 
 ## Compiler
 

@@ -32,6 +32,10 @@ class AndroidProgressStore(context: Context) : ProgressStore {
             played = played,
             sound = prefs.getBoolean("sound", true),
             haptics = prefs.getBoolean("haptics", true),
+            lang = runCatching {
+                com.botillon.games.ui.Lang.valueOf(prefs.getString("lang", "FR") ?: "FR")
+            }.getOrDefault(com.botillon.games.ui.Lang.FR),
+            zoom = prefs.getFloat("zoom", 1f),
         )
     }
 
@@ -41,6 +45,8 @@ class AndroidProgressStore(context: Context) : ProgressStore {
             .putString("played", progress.played.joinToString(","))
             .putBoolean("sound", progress.sound)
             .putBoolean("haptics", progress.haptics)
+            .putString("lang", progress.lang.name)
+            .putFloat("zoom", progress.zoom)
             .apply()
     }
 }

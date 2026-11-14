@@ -42,6 +42,7 @@ fun HubScreen(
     onPlay: (String) -> Unit,
     onSettings: () -> Unit,
 ) {
+    val strings = LocalStrings.current
     var filter by remember { mutableStateOf<Family?>(null) }
     val visible = entries.filter { filter == null || it.family == filter }
     val variants = entries.sumOf { it.variants.size }
@@ -51,14 +52,14 @@ fun HubScreen(
             Column(Modifier.padding(horizontal = 18.dp, vertical = 14.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        AppText("SANS PUB · HORS-LIGNE", style = Typo.label, color = Ink.Coral)
+                        AppText(strings.eyebrow, style = Typo.label, color = Ink.Coral)
                         Spacer(Modifier.height(2.dp))
                         Row {
                             AppText("100 ", style = Typo.display, color = Ink.Text)
-                            AppText("Games", style = Typo.display, color = Ink.Teal)
+                            AppText(strings.titleBottom, style = Typo.display, color = Ink.Teal)
                         }
                         AppText(
-                            "${entries.size} jeux · $variants variantes · aucun compte",
+                            strings.subtitle(entries.size, variants),
                             style = Typo.small,
                             color = Ink.Muted,
                         )
@@ -74,7 +75,7 @@ fun HubScreen(
                     Modifier.horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.spacedBy(7.dp),
                 ) {
-                    FilterChip("Tout", filter == null, Ink.Text) { filter = null }
+                    FilterChip(strings.all, filter == null, Ink.Text) { filter = null }
                     Family.entries.forEach { family ->
                         FilterChip(family.label, filter == family, Ink.Teal) { filter = family }
                     }
@@ -144,7 +145,7 @@ private fun GameCard(entry: GameEntry, best: Long, played: Boolean, onClick: () 
             Spacer(Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (entry.variants.size > 1) {
-                    Pill("${entry.variants.size} variantes", color = Ink.Muted, background = Ink.CardAlt)
+                    Pill("${entry.variants.size} " + LocalStrings.current.variants, color = Ink.Muted, background = Ink.CardAlt)
                 }
                 Spacer(Modifier.weight(1f))
                 if (best > 0) {

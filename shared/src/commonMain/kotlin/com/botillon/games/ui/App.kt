@@ -9,6 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +38,7 @@ fun App(
     Typo.family = family
 
     var progress by remember { mutableStateOf(store.load()) }
+    val baseDensity = LocalDensity.current
     var screen by remember { mutableStateOf<Screen>(Screen.Hub) }
 
     fun update(transform: (Progress) -> Progress) {
@@ -50,6 +53,8 @@ fun App(
     CompositionLocalProvider(
         LocalSound provides effectiveSound,
         LocalHaptics provides effectiveHaptics,
+        LocalStrings provides Strings(progress.lang),
+        LocalDensity provides Density(baseDensity.density * progress.zoom, baseDensity.fontScale),
     ) {
         HandleBack(enabled = screen != Screen.Hub) { screen = Screen.Hub }
 
@@ -67,8 +72,10 @@ fun App(
                     onBack = { screen = Screen.Hub },
                     onToggleSound = { on -> update { it.copy(sound = on) } },
                     onToggleHaptics = { on -> update { it.copy(haptics = on) } },
+                    onLang = { lang -> update { it.copy(lang = lang) } },
+                    onZoom = { zoom -> update { it.copy(zoom = zoom) } },
                     onReset = {
-                        update { p -> Progress(sound = p.sound, haptics = p.haptics) }
+                        update { p -> Progress(sound = p.sound, haptics = p.haptics, lang = p.lang, zoom = p.zoom) }
                     },
                 )
 
