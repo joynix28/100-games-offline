@@ -179,12 +179,12 @@ private fun Mancala(variant: Int, finish: (Long, Boolean) -> Unit) {
                 Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal = 6.dp), verticalArrangement = Arrangement.SpaceEvenly) {
                     Row(Modifier.weight(1f).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(3.dp)) {
                         for (i in 12 downTo 7) {
-                            Hole(board[i], false, false) { }
+                            Hole(board[i], false, false, Modifier.weight(1f)) { }
                         }
                     }
                     Row(Modifier.weight(1f).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(3.dp)) {
                         for (i in 0..5) {
-                            Hole(board[i], true, turn == 0 && !reported && board[i] > 0) { playPlayer(i) }
+                            Hole(board[i], true, turn == 0 && !reported && board[i] > 0, Modifier.weight(1f)) { playPlayer(i) }
                         }
                     }
                 }
