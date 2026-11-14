@@ -41,8 +41,18 @@ vitesse). Le hub affiche automatiquement le nombre de jeux et de variantes.
 | Allumettes | 11, 15, 21 |
 | Pierre-feuille-ciseaux | 2, 3, 5 manches |
 | Dames | Rapide, Classique, Longue |
+| Water Sort | Facile, Moyen, Difficile |
+| Éteindre les lumières | 3 × 3, 4 × 4, 5 × 5 |
+| Sudoku | Facile, Moyen, Difficile |
+| Chiffres en ordre | 3 × 3, 4 × 4, 5 × 5 |
+| Mots mêlés | Animaux, Voyage, Cuisine |
+| Lancer de couteaux | Lent, Normal, Rapide |
+| Bulles | Facile, Normal, Difficile |
+| Dominos | Double-six, Double-six long, Double-neuf |
+| Trois alignés | Détente, Classique, Rapide |
+| Couleurs | 8 × 10, 10 × 12, 12 × 14 |
 
-Soit **16 jeux et 48 variantes** dans cette version.
+Soit **26 jeux et 78 variantes** dans cette version.
 
 La collection est prévue pour grandir jusqu'à 100 jeux. L'architecture est
 faite pour ça : un fichier par jeu, une entrée dans `Catalog.kt`.

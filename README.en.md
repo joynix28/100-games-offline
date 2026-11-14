@@ -7,11 +7,12 @@ no ad between two rounds.
 
 [Français](README.md) · [Download the APK](https://github.com/joynix28/100-games-offline/releases/latest)
 
-## Games (16, 48 variants)
+## Games (26, 78 variants)
 
 Tic-tac-toe/gomoku, Connect 4, Minesweeper, 2048, Sliding puzzle, Memory, Snake,
 Pong, Breakout, Simon, Mental math, Hangman, Guess the number, Matches,
-Rock-paper-scissors, Checkers.
+Rock-paper-scissors, Checkers, Water Sort, Lights Out, Sudoku, Number tiles,
+Word search, Knife hit, Bubbles, Dominoes, Match 3, SameGame.
 
 Each game has several variants (board size, difficulty, speed). The collection
 is built to grow: one file per game, one entry in `Catalog.kt`.
